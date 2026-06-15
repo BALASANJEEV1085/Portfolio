@@ -1,0 +1,419 @@
+/* ── Container ─────────────────────────────────────── */
+.cb-root {
+  position: fixed;
+  bottom: 1.75rem;
+  right: 1.75rem;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 1rem;
+}
+
+/* ── Floating trigger button ────────────────────────── */
+.cb-trigger {
+  width: 64px;
+  height: 64px;
+  border: none;
+  background: transparent;
+  padding: 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: cb-float 3s ease-in-out infinite;
+  /* Removed drop-shadow per request */
+  transition: transform 0.3s ease;
+}
+
+.cb-trigger img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+.cb-trigger:hover {
+  animation-play-state: paused;
+  transform: scale(1.1);
+}
+
+.cb-trigger--open {
+  animation: none;
+  transform: scale(0.92) rotate(-8deg);
+}
+
+@keyframes cb-float {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-12px); }
+}
+
+/* ── Chat panel ─────────────────────────────────────── */
+.cb-panel {
+  width: 360px;
+  height: 500px;
+  display: flex;
+  flex-direction: column;
+  background: #0f0f13;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,0.04) inset,
+    0 32px 80px -16px rgba(0, 0, 0, 0.7);
+  position: absolute;
+  bottom: 80px;
+  right: 0;
+
+  /* Hidden state */
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(16px) scale(0.97);
+  transition:
+    opacity 0.3s ease,
+    transform 0.3s ease,
+    visibility 0.3s;
+  pointer-events: none;
+}
+
+.cb-panel--visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
+}
+
+/* ── Header ─────────────────────────────────────────── */
+.cb-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.1rem 1.25rem;
+  background: #161619;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  flex-shrink: 0;
+}
+
+.cb-header__left {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+.cb-header__avatar {
+  width: 38px;
+  height: 38px;
+  border-radius: 12px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.04);
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cb-header__avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.cb-header__meta {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.cb-header__name {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #f1f1f1;
+  letter-spacing: -0.01em;
+  line-height: 1;
+}
+
+.cb-header__status {
+  font-size: 0.72rem;
+  color: #5eead4; /* teal, trustworthy */
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-weight: 500;
+}
+
+.cb-dot {
+  width: 7px;
+  height: 7px;
+  background: #5eead4;
+  border-radius: 50%;
+  display: block;
+  box-shadow: 0 0 6px #5eead4;
+}
+
+.cb-close {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: transparent;
+  color: rgba(255, 255, 255, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.cb-close:hover {
+  background: rgba(239, 68, 68, 0.12);
+  border-color: rgba(239, 68, 68, 0.35);
+  color: #ef4444;
+}
+
+/* ── Message body ───────────────────────────────────── */
+.cb-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1.25rem 1.1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+  scrollbar-width: none;
+}
+
+.cb-body::-webkit-scrollbar { display: none; }
+
+/* ── Individual messages ────────────────────────────── */
+.cb-msg {
+  display: flex;
+  flex-direction: column;
+  max-width: 82%;
+  animation: cb-msg-in 0.3s cubic-bezier(0.2, 0.9, 0.3, 1) both;
+}
+
+@keyframes cb-msg-in {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.cb-msg--bot {
+  align-self: flex-start;
+}
+
+.cb-msg--user {
+  align-self: flex-end;
+  align-items: flex-end;
+}
+
+.cb-msg__bubble {
+  padding: 0.75rem 1rem;
+  font-size: 0.875rem;
+  line-height: 1.6;
+  border-radius: 14px;
+}
+
+.cb-msg--bot .cb-msg__bubble {
+  background: #1e1e24;
+  color: #c9c9d4;
+  border-bottom-left-radius: 4px;
+  border: 1px solid rgba(255,255,255,0.05);
+}
+
+.cb-msg--user .cb-msg__bubble {
+  background: #4f46e5;
+  color: #fff;
+  border-bottom-right-radius: 4px;
+}
+
+.cb-msg__time {
+  font-size: 0.65rem;
+  color: rgba(255, 255, 255, 0.25);
+  margin-top: 4px;
+  padding: 0 4px;
+}
+
+/* ── Typing indicator ───────────────────────────────── */
+.cb-typing {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 0.85rem 1rem;
+  width: fit-content;
+}
+
+.cb-typing span {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #555;
+  display: block;
+  animation: cb-blink 1.2s ease-in-out infinite;
+}
+
+.cb-typing span:nth-child(2) { animation-delay: 0.2s; }
+.cb-typing span:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes cb-blink {
+  0%, 80%, 100% { transform: scale(1); opacity: 0.4; }
+  40%            { transform: scale(1.25); opacity: 1; }
+}
+
+/* ── Follow-ups (In message flow) ────────────────────── */
+.cb-followups {
+  padding-top: 0.5rem;
+  margin-top: 0.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.04);
+  animation: cb-msg-in 0.4s ease-out both;
+}
+
+.cb-followups-label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #f1f1f1;
+  display: block;
+  margin-bottom: 0.75rem;
+}
+
+.cb-followups-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.cb-followup-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.6rem 0.5rem;
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.65);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+  border: 1px solid transparent;
+}
+
+.cb-followup-icon {
+  color: rgba(255, 255, 255, 0.25);
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.cb-followup-item:hover {
+  background: rgba(255, 255, 255, 0.03);
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.06);
+}
+
+.cb-followup-item:hover .cb-followup-icon {
+  color: #4f46e5;
+  transform: scale(1.1) rotate(45deg);
+}
+
+/* ── Suggestion chips (Initial State) ────────────────── */
+.cb-suggestions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  background: #0f0f13;
+  border-top: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.cb-suggestion-chip {
+  padding: 0.4rem 0.8rem;
+  font-size: 0.75rem;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 20px;
+  color: rgba(255, 255, 255, 0.6);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.cb-suggestion-chip:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.2);
+  color: #fff;
+  transform: translateY(-1px);
+}
+
+.cb-suggestion-chip:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+.cb-footer {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.9rem 1rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  background: #0f0f13;
+  flex-shrink: 0;
+}
+
+.cb-input {
+  flex: 1;
+  background: #1a1a20;
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 10px;
+  padding: 0.65rem 1rem;
+  font-size: 0.875rem;
+  color: #e8e8f0;
+  outline: none;
+  transition: border-color 0.2s ease, background 0.2s ease;
+  font-family: inherit;
+}
+
+.cb-input::placeholder {
+  color: rgba(255, 255, 255, 0.25);
+}
+
+.cb-input:focus {
+  border-color: rgba(99, 102, 241, 0.6);
+  background: #1e1e28;
+}
+
+.cb-send {
+  width: 38px;
+  height: 38px;
+  flex-shrink: 0;
+  border-radius: 10px;
+  background: #4f46e5;
+  border: none;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.cb-send:hover:not(:disabled) {
+  background: #4338ca;
+  transform: translateY(-1px);
+}
+
+.cb-send:disabled {
+  background: #2a2a35;
+  color: rgba(255,255,255,0.2);
+  cursor: not-allowed;
+}
+
+/* ── Responsive ─────────────────────────────────────── */
+@media (max-width: 480px) {
+  .cb-root {
+    bottom: 1rem;
+    right: 1rem;
+  }
+
+  .cb-panel {
+    width: calc(100vw - 2rem);
+    height: 70vh;
+    border-radius: 18px;
+    right: 0;
+  }
+}
