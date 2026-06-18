@@ -1,3 +1,5 @@
+[![Deptic Security](https://api.deptic.in/badge/github/BALASANJEEV1085/Portfolio)](https://deptic.in/dashboard)
+
 # React + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
