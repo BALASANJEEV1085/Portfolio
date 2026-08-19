@@ -8,7 +8,7 @@ on:
 env:
   AWS_REGION: ap-south-1
   ECR_REPOSITORY: portfolio
-  INSTANCE_ID: i-08e2616ab5136ba68
+  INSTANCE_ID: i-test123
 
 jobs:
   deploy:
@@ -50,8 +50,8 @@ jobs:
         run: |
           set -e
           AWS_REGION="ap-south-1"
-          INSTANCE_ID="i-08e2616ab5136ba68"
-          ECR_REGISTRY="${ECR_REGISTRY:-696434672023.dkr.ecr.ap-south-1.amazonaws.com}"
+          INSTANCE_ID="i-test123"
+          ECR_REGISTRY="${ECR_REGISTRY:-portfolio.dkr.ecr.ap-south-1.amazonaws.com}"
           REPO="portfolio"
           SECRET_ID="deptic/Portfolio/secrets"
           FULL_IMAGE="$ECR_REGISTRY/$REPO:latest"
