@@ -11,6 +11,7 @@ env:
   ECR_REPOSITORY: portfolio
   IMAGE_TAG: ${{ github.sha }}
   INSTANCE_ID: i-0e196034192c0264a
+  PORT: 3000
 
 jobs:
   build-and-deploy:
@@ -71,6 +72,7 @@ jobs:
           INSTANCE_ID="${{ env.INSTANCE_ID }}"
           IMAGE_URI="${{ env.IMAGE_URI }}"
           ECR_REGISTRY="${{ env.ECR_REGISTRY }}"
+          PORT="${{ env.PORT }}"
 
           cat > /tmp/ssm-params.json << 'SSMPARAMS'
           {
@@ -79,12 +81,13 @@ jobs:
               "docker pull $IMAGE_URI",
               "docker stop app || true",
               "docker rm app || true",
-              "docker run -d --restart always -p 80:80 --name app $IMAGE_URI"
+              "docker run -d --restart always -p 80:$PORT --name app $IMAGE_URI"
             ]
           }
           SSMPARAMS
 
           sed -i "s|\$IMAGE_URI|$IMAGE_URI|g" /tmp/ssm-params.json
+          sed -i "s|\$PORT|$PORT|g" /tmp/ssm-params.json
 
           COMMAND_ID=$(aws ssm send-command \
             --instance-ids "$INSTANCE_ID" \
@@ -98,13 +101,19 @@ jobs:
 
           sleep 15
 
-          aws ssm list-command-invocations \
+          STATUS=$(aws ssm list-command-invocations \
             --command-id "$COMMAND_ID" \
             --instance-id "$INSTANCE_ID" \
             --region "$REGION" \
             --details \
             --query "CommandInvocations[0].CommandPlugins[0].Status" \
-            --output text
+            --output text)
+
+          echo "SSM Command Status: $STATUS"
+          if [ "$STATUS" != "Success" ]; then
+            echo "SSM command failed"
+            exit 1
+          fi
 
       - name: Health check
         run: |
@@ -112,11 +121,11 @@ jobs:
           sleep 10
           for i in {1..12}; do
             HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" http://3.7.91.80 || echo "000")
+            echo "Attempt $i: HTTP status $HTTP_CODE"
             if [ "$HTTP_CODE" = "200" ]; then
-              echo "Health check passed (HTTP 200)"
+              echo "Health check passed!"
               exit 0
             fi
-            echo "Attempt $i: HTTP $HTTP_CODE, retrying in 5 seconds..."
             sleep 5
           done
           echo "Health check failed after 12 attempts"
