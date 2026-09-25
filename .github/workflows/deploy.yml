@@ -1,6 +1,3 @@
-# Workflow: Build, Deploy, and Verify Portfolio on EC2/Docker
-# Repository: Portfolio (Next.js)
-# Target: EC2 (i-0e196034192c0264a) via SSM, Docker container on port 80 -> port 3000
 name: Build, Deploy and Verify Portfolio
 
 on:
@@ -115,27 +112,18 @@ jobs:
           echo "SSM Command Status: $STATUS"
 
           if [ "$STATUS" != "Success" ]; then
-            echo "Deployment command failed or is still running"
+            echo "SSM command failed with status: $STATUS"
             exit 1
           fi
 
       - name: Health check
         run: |
-          echo "Waiting for the application to be ready..."
+          echo "Waiting for application to start..."
           sleep 10
-          HTTP_STATUS=$(curl -s -o /dev/null -w "%{http_code}" ${{ env.PUBLIC_URL }})
-          echo "HTTP Status: $HTTP_STATUS"
-          if [ "$HTTP_STATUS" -eq 200 ]; then
-            echo "Health check passed"
-          else
-            echo "Health check failed"
+          HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" ${{ env.PUBLIC_URL }} || echo "000")
+          echo "HTTP Status Code: $HTTP_CODE"
+          if [ "$HTTP_CODE" != "200" ]; then
+            echo "Health check failed: expected 200, got $HTTP_CODE"
             exit 1
           fi
-
-      - name: Verify deployment
-        run: |
-          echo "=== Deployment Verification ==="
-          echo "Application URL: ${{ env.PUBLIC_URL }}"
-          echo "Docker Image: ${{ env.IMAGE_URI }}"
-          echo "EC2 Instance: ${{ env.INSTANCE_ID }}"
-          echo "Deployment completed successfully"
+          echo "Health check passed! Application is running at ${{ env.PUBLIC_URL }}"
