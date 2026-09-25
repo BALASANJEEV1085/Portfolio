@@ -1,5 +1,5 @@
 # Workflow: Build, Deploy, and Verify Portfolio on EC2/Docker
-# Repository: Portfolio (Next.js) — private repo
+# Repository: Portfolio (Next.js)
 # Target: EC2 (i-0e196034192c0264a) via SSM, Docker container on port 80 -> port 3000
 name: Build, Deploy and Verify Portfolio
 
@@ -109,25 +109,33 @@ jobs:
             --command-id "$COMMAND_ID" \
             --instance-id "$INSTANCE_ID" \
             --region "$REGION" \
-            --details \
-            --query "CommandInvocations[0].CommandPlugins[0].Status" \
+            --query "CommandInvocations[0].Status" \
             --output text)
 
           echo "SSM Command Status: $STATUS"
+
           if [ "$STATUS" != "Success" ]; then
-            echo "SSM command failed or still running."
+            echo "Deployment command failed or is still running"
             exit 1
           fi
-          echo "Deployment command completed successfully."
 
       - name: Health check
         run: |
-          echo "Waiting for application to start..."
+          echo "Waiting for the application to be ready..."
           sleep 10
-          HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" --connect-timeout 10 --max-time 30 "${{ env.PUBLIC_URL }}" || echo "000")
-          echo "HTTP Status Code: $HTTP_CODE"
-          if [ "$HTTP_CODE" != "200" ]; then
-            echo "Health check failed - got HTTP $HTTP_CODE instead of 200"
+          HTTP_STATUS=$(curl -s -o /dev/null -w "%{http_code}" ${{ env.PUBLIC_URL }})
+          echo "HTTP Status: $HTTP_STATUS"
+          if [ "$HTTP_STATUS" -eq 200 ]; then
+            echo "Health check passed"
+          else
+            echo "Health check failed"
             exit 1
           fi
-          echo "Application is healthy and responding with HTTP 200"
+
+      - name: Verify deployment
+        run: |
+          echo "=== Deployment Verification ==="
+          echo "Application URL: ${{ env.PUBLIC_URL }}"
+          echo "Docker Image: ${{ env.IMAGE_URI }}"
+          echo "EC2 Instance: ${{ env.INSTANCE_ID }}"
+          echo "Deployment completed successfully"
