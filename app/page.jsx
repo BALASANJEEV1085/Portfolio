@@ -15,7 +15,7 @@ import {
   FaLinkedin, FaInstagram, FaEnvelope, FaMapMarkerAlt,
   FaFileDownload
 } from 'react-icons/fa';
-import { SiMongodb, SiMysql, SiExpress, SiJupyter } from 'react-icons/si';
+import { SiDocker, SiGo, SiMongodb, SiMysql, SiExpress, SiJupyter } from 'react-icons/si';
 
 const project1Image = '/assets/project1.png';
 const project2Image = '/assets/project2.png';
@@ -91,6 +91,7 @@ export default function Home() {
         { name: 'Java', icon: <FaJava /> },
         { name: 'Python', icon: <FaPython /> },
         { name: 'JavaScript', icon: <FaJs /> },
+        { name: 'Go', icon: <SiGo /> },
       ],
     },
     {
@@ -121,6 +122,7 @@ export default function Home() {
         { name: 'Git', icon: <FaGitAlt /> },
         { name: 'GitHub', icon: <FaGithub /> },
         { name: 'Jupyter', icon: <SiJupyter /> },
+        { name: 'Docker', icon: <SiDocker /> },
         { name: 'Visual Paradigm', icon: <FaProjectDiagram /> },
       ],
     },
@@ -283,6 +285,10 @@ export default function Home() {
             <p className="section-body">
               I build full-stack applications, backend services, and machine-learning projects
               using technologies including React, Node.js, Go, Python, and MongoDB.
+            </p>
+            <p className="section-body">
+              I'm interested in software engineering, AI engineering, backend development,
+              and API and integration engineering opportunities.
             </p>
             <div className="about-grid-simple">
               <div className="about-row">
