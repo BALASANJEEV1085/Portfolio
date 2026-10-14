@@ -1,28 +1,28 @@
 'use client';
 
-import React, { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import {
   Home as HomeIcon, User, Briefcase, PlusCircle, Mail, Rocket
 } from 'lucide-react';
 import './Navbar.css';
+
+const NAV_LINKS = [
+  { name: 'Home', href: '#home', Icon: HomeIcon },
+  { name: 'About', href: '#about', Icon: User },
+  { name: 'Skills', href: '#skills', Icon: Rocket },
+  { name: 'Projects', href: '#projects', Icon: Briefcase },
+  { name: 'Others', href: '#others', Icon: PlusCircle },
+  { name: 'Contact', href: '#contact', Icon: Mail }
+];
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [activeIndex, setActiveIndex] = useState(0);
   const listRef = useRef(null);
 
-  const navLinks = [
-    { name: 'Home', href: '#', icon: <HomeIcon size={18} /> },
-    { name: 'About', href: '#about', icon: <User size={18} /> },
-    { name: 'Skills', href: '#skills', icon: <Rocket size={18} /> },
-    { name: 'Projects', href: '#projects', icon: <Briefcase size={18} /> },
-    { name: 'Others', href: '#others', icon: <PlusCircle size={18} /> },
-    { name: 'Contact', href: '#contact', icon: <Mail size={18} /> }
-  ];
-
   // Scrollspy
   useEffect(() => {
-    const sectionIds = navLinks.map(link => link.href.replace('#', '') || 'home');
+    const sectionIds = NAV_LINKS.map(link => link.href.slice(1));
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach(entry => {
@@ -31,7 +31,7 @@ const Navbar = () => {
             if (index !== -1) {
               setActiveIndex(index);
               // Update URL hash without causing a jump or adding to history
-              const newHash = index === 0 ? '#' : `#${entry.target.id}`;
+              const newHash = `#${entry.target.id}`;
               if (window.location.hash !== newHash) {
                 window.history.replaceState(null, null, newHash);
               }
@@ -48,19 +48,19 @@ const Navbar = () => {
     });
 
     return () => observer.disconnect();
-  }, [navLinks]);
+  }, []);
 
   // Hash sync on mount and hashchange
   useEffect(() => {
     const sync = () => {
-      const hash = window.location.hash || '#';
-      const index = navLinks.findIndex(l => l.href === hash || (hash === '#' && l.href === '#'));
+      const hash = window.location.hash || '#home';
+      const index = NAV_LINKS.findIndex(link => link.href === hash);
       if (index !== -1) setActiveIndex(index);
     };
     sync();
     window.addEventListener('hashchange', sync);
     return () => window.removeEventListener('hashchange', sync);
-  }, [navLinks]);
+  }, []);
 
   // Scroll detection
   useEffect(() => {
@@ -84,24 +84,26 @@ const Navbar = () => {
   }, [activeIndex]);
 
   return (
-    <nav className={`navbar-container ${scrolled ? 'scrolled' : ''}`}>
+    <nav className={`navbar-container ${scrolled ? 'scrolled' : ''}`} aria-label="Primary navigation">
       <div className="navbar-dock">
         <div className="dock-glass" ref={listRef}>
-          {navLinks.map((link, index) => (
+          {NAV_LINKS.map(({ name, href, Icon }, index) => (
             <a
-              key={link.name}
-              href={link.href}
+              key={name}
+              href={href}
               className={`nav-item ${activeIndex === index ? 'active' : ''}`}
+              aria-current={activeIndex === index ? 'location' : undefined}
               onClick={(e) => {
                 e.preventDefault();
                 setActiveIndex(index);
-                const targetId = link.href === '#' ? 'home' : link.href.replace('#', '');
+                const targetId = href.slice(1);
                 const el = document.getElementById(targetId);
-                if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+                if (el) el.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' });
               }}
             >
-              <span className="nav-icon">{link.icon}</span>
-              <span className="nav-text">{link.name}</span>
+              <span className="nav-icon" aria-hidden="true"><Icon size={18} /></span>
+              <span className="nav-text">{name}</span>
             </a>
           ))}
         </div>

@@ -4,7 +4,6 @@
     "role": "Full Stack Developer & ML Engineer",
     "location": "Dindigul, Tamil Nadu, India",
     "email": "balasnjeev1085@gmail.com",
-    "phone": "+91 7550309871",
     "github": "https://github.com/BALASANJEEV1085",
     "linkedin": "https://www.linkedin.com/in/balasanjeev-c-00258b298/"
   },
@@ -23,22 +22,23 @@
   "about": {
     "summary": "I’m a Computer Science Engineering student passionate about Full Stack Development and Machine Learning. I enjoy building scalable and intelligent applications that solve real-world problems.",
     "keywords": ["Full Stack Developer", "ML Engineer", "MERN Stack", "AI Enthusiast"],
-    "introduce": "Hi, I’m Balasanjeev. I'm a Full Stack Developer and a Machine Learning enthusiast currently studying Computer Science Engineering. I focus on building end-to-end applications using the MERN stack. I also have hands-on experience with AI-driven projects. I led the development of Nandha Notes as a team leader and created scalable applications like SocialPlanet. During my internship, I developed an AI-powered PDF chatbot using NLP. I’ve also worked on sentiment analysis and computer vision projects. What makes me unique is my ability to blend full-stack development with AI to create practical solutions. I’m looking for opportunities as a Full Stack Developer or ML Engineer where I can contribute and grow."
+    "introduce": "Hello, I'm Balasanjeev, a Computer Science Engineering student with a strong foundation in Full Stack Development, and Machine Learning. I have hands-on experience building scalable web applications and secure backend systems. My flagship project, Deptic, is a full-stack platform that automates GitHub dependency vulnerability scanning, security fix pull requests, SBOM generation, and compliance reporting. I also led the development of Nandha Notes, a collaborative notes-sharing platform for students, and developed an AI-powered PDF chatbot during my internship. These experiences have strengthened my skills in software engineering, system design, API development, and problem-solving. I'm passionate about building reliable, secure, and impactful software, and I'm seeking opportunities as a Full Stack Developer, Backend Developer, or Software Engineer where I can contribute effectively while continuing to learn and grow."
+
   },
 
   "education": {
     "degree": "B.E Computer Science and Engineering",
     "college": "Nandha Engineering College",
-    "cgpa": "8.07",
+    "cgpa": "8.03",
     "year": "2023 - Present"
   },
 
   "skills": {
-    "languages": ["Java", "Python", "JavaScript"],
-    "frontend": ["HTML", "CSS", "React", "Bootstrap", "Figma"],
-    "backend": ["Node.js", "Express.js"],
-    "database": ["MongoDB", "MySQL"],
-    "tools": ["Git", "GitHub", "Jupyter", "Visual Paradigm"],
+    "languages": ["Java", "Python", "JavaScript", "React.js"],
+    "frontend": ["HTML", "CSS", "React", "Bootstrap"],
+    "backend": ["Node.js", "Express.js", "Go"],
+    "database": ["MongoDB", "MySQL", "Supabase"],
+    "tools": ["Git", "GitHub", "Jupyter", "Visual Paradigm", "Docker"],
     "core": ["DSA", "OOPS", "DBMS", "Operating Systems"],
     "domains": ["Full Stack Development", "Machine Learning"]
   },
@@ -92,8 +92,7 @@
       "description": "I built a full-stack social media app with posting, liking, and commenting features.",
       "tech": ["React", "MongoDB", "Node.js", "Express"],
       "links": {
-        "live": "https://socialsplanet.netlify.app/",
-        "github": "https://github.com/BALASANJEEV1085/SocialPlanet"
+        "live": "https://socialsplanet.netlify.app/"
       },
       "details": {
         "problem": "Need for interactive social platform",
@@ -130,13 +129,64 @@
       ]
     },
     {
-      "name": "Thiraimini",
-      "description": "I built a movie info website with ratings and details.",
-      "tech": ["HTML", "CSS", "JavaScript"],
+      "name": "Deptic",
+      "description": "I developed a full-stack platform for GitHub dependency vulnerability scanning, automated remediation, and compliance reporting.",
+      "role": "Full-Stack Developer",
+      "tech": [
+        "Go",
+        "Fiber v2",
+        "PostgreSQL",
+        "Redis",
+        "React",
+        "TypeScript",
+        "Docker",
+        "JWT",
+        "GitHub API",
+        "OSV.dev API",
+        "NVD API",
+        "Netlify"
+      ],
       "links": {
-        "live": "https://thiraimini.netlify.app/",
-        "github": "https://github.com/BALASANJEEV1085/THIRAIMINI"
-      }
+        "live": "https://deptic.netlify.app",
+        "github": "https://github.com/BALASANJEEV1085/deptic"
+      },
+      "details": {
+        "problem": "Developers faced difficulty identifying vulnerable dependencies and manually updating projects to secure versions.",
+        "solution": "Built a SaaS platform that scans GitHub repositories, detects CVEs, generates SBOMs, automates Fix PRs, and provides compliance scoring.",
+        "features": [
+          "GitHub OAuth Login",
+          "Repository Dependency Scanning",
+          "CVE Detection",
+          "Automated Fix PR Generation",
+          "CycloneDX & SPDX SBOM Export",
+          "NTIA & CRA Compliance Scoring",
+          "Workspace Collaboration",
+          "Web Push Notifications",
+          "Razorpay Integration",
+          "CLI Scanner (deptic-scan)"
+        ],
+        "challenges": [
+          "Resolving deep transitive dependencies",
+          "Integrating multiple vulnerability databases",
+          "Generating accurate zero-CVE package versions",
+          "Designing scalable backend architecture"
+        ],
+        "learned": [
+          "Go Backend Development",
+          "DevSecOps Practices",
+          "GitHub API Integration",
+          "Secure Authentication with JWT",
+          "Docker Deployment",
+          "SBOM Standards and Compliance"
+        ]
+      },
+      "impact": [
+        "Scanned repositories across multiple package ecosystems",
+        "Resolved 1000+ transitive dependencies automatically",
+        "Reduced vulnerability remediation from hours to seconds using automated Fix PRs",
+        "Published cross-platform CLI scanner to npm",
+        "Enabled compliance reporting with CycloneDX and SPDX SBOM export"
+      ]
     }
   ],
 
@@ -147,7 +197,7 @@
 
   "dsa": {
     "platform": "LeetCode",
-    "topics": ["Arrays", "OOPS", "Problem Solving"]
+    "topics": ["Arrays", "OOPS", "Problem Solving", "Stack", "Linked List"]
   },
 
   "strengths": [

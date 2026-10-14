@@ -2,17 +2,16 @@
 
 import dynamic from 'next/dynamic';
 const Silk = dynamic(() => import('../components/Silk'), { ssr: false });
+const Chatbot = dynamic(() => import('../components/Chatbot'), { ssr: false });
 import Navbar from '../components/Navbar';
 
-import Chatbot from '../components/Chatbot';
-import emailjs from '@emailjs/browser';
 import { useEffect, useRef, useState, useCallback } from 'react';
 import './Home.css';
 
 import {
   FaJava, FaPython, FaHtml5, FaCss3Alt, FaJs, FaReact,
   FaBootstrap, FaGitAlt, FaNodeJs, FaFigma, FaGithub,
-  FaProjectDiagram, FaExternalLinkAlt, FaBriefcase,
+  FaProjectDiagram, FaExternalLinkAlt,
   FaLinkedin, FaInstagram, FaEnvelope, FaMapMarkerAlt,
   FaFileDownload
 } from 'react-icons/fa';
@@ -22,7 +21,6 @@ const project1Image = '/assets/project1.png';
 const project2Image = '/assets/project2.png';
 const project3Image = '/assets/project3.png';
 const project4Image = '/assets/project4.png';
-const project5Image = '/assets/project5.png';
 const astronovaImage = '/assets/astronova.png';
 const innovationImage = '/assets/innovation.png';
 const internshipPdf = '/assets/internship.pdf';
@@ -35,26 +33,41 @@ export default function Home() {
   const [isSending, setIsSending] = useState(false);
   const [isSent, setIsSent] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
+  const [enableSilk, setEnableSilk] = useState(false);
 
-  const sendEmail = (e) => {
+  useEffect(() => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return undefined;
+
+    const startSilk = () => setEnableSilk(true);
+    if ('requestIdleCallback' in window) {
+      const idleId = window.requestIdleCallback(startSilk, { timeout: 1500 });
+      return () => window.cancelIdleCallback(idleId);
+    }
+
+    const timerId = window.setTimeout(startSilk, 400);
+    return () => window.clearTimeout(timerId);
+  }, []);
+
+  const sendEmail = async (e) => {
     e.preventDefault();
     setIsSending(true);
 
-    emailjs.sendForm('service_22n6rwk', 'template_e9qn86x', formRef.current, 'bnok1q-2_O6_urEpK')
-      .then((result) => {
-        setIsSent(true);
-        setIsSending(false);
-        setShowAlert(true);
-        e.target.reset();
-        setTimeout(() => {
-          setIsSent(false);
-          setShowAlert(false);
-        }, 5000);
-      }, (error) => {
-        console.error(error.text);
-        setIsSending(false);
-        alert("Failed to send message. Please try again.");
-      });
+    try {
+      const { default: emailjs } = await import('@emailjs/browser');
+      await emailjs.sendForm('service_22n6rwk', 'template_e9qn86x', formRef.current, 'bnok1q-2_O6_urEpK');
+      setIsSent(true);
+      setShowAlert(true);
+      e.target.reset();
+      setTimeout(() => {
+        setIsSent(false);
+        setShowAlert(false);
+      }, 5000);
+    } catch (error) {
+      console.error(error);
+      alert("Failed to send message. Please try again.");
+    } finally {
+      setIsSending(false);
+    }
   };
 
   useEffect(() => {
@@ -115,12 +128,12 @@ export default function Home() {
 
   const projects = [
     {
-      title: "Nandha Notes",
-      description: "A study notes-sharing platform that allows students of my college to share and access study materials easily.",
-      tags: ["React", "MongoDB", "Node.js", "Express", "Tailwind CSS"],
+      title: "Deptic",
+      description: "Built a Go-based full-stack platform for GitHub repository security, automated dependency vulnerability detection, fix PR generation, SBOM export, and compliance reporting.",
+      tags: ["Next.js", "Supabase", "Go", "Redis", "OSV.dev"],
       image: project1Image,
-      liveUrl: "https://nandha-notes.netlify.app",
-      githubUrl: "https://github.com/BALASANJEEV1085/NANDHANOTES"
+      liveUrl: "https://deptic.netlify.app",
+      githubUrl: "https://github.com/BALASANJEEV1085/deptic"
     },
     {
       title: "Sentiment Analysis Dashboard",
@@ -135,8 +148,7 @@ export default function Home() {
       description: "Built a responsive full-stack social media web application with real-time features like posting, liking, and commenting.",
       tags: ["React", "MongoDB", "Node.js", "Express.js"],
       image: project3Image,
-      liveUrl: "https://socialsplanet.netlify.app/",
-      githubUrl: "https://github.com/BALASANJEEV1085/SocialPlanet"
+      liveUrl: "https://socialsplanet.netlify.app/"
     },
     {
       title: "Silkworm Classification",
@@ -147,12 +159,12 @@ export default function Home() {
       githubUrl: "https://github.com/BALASANJEEV1085"
     },
     {
-      title: "Thiraimini",
-      description: "Modern website for seeking information about movies, TV shows, and ratings.",
-      tags: ["HTML", "CSS", "JavaScript"],
-      image: project5Image,
-      liveUrl: "https://thiraimini.netlify.app/",
-      githubUrl: "https://github.com/BALASANJEEV1085/THIRAIMINI"
+      title: "Nandha Notes",
+      description: "A study notes-sharing platform that allows students of my college to share and access study materials easily.",
+      tags: ["React", "MongoDB", "Node.js", "Express", "Tailwind CSS"],
+      image: project1Image,
+      liveUrl: "https://nandha-notes.netlify.app",
+      githubUrl: "https://github.com/BALASANJEEV1085/NANDHANOTES"
     }
   ];
 
@@ -191,11 +203,12 @@ export default function Home() {
   ];
 
   return (
-    <main className="home">
+    <main id="main-content" className="home">
+      <a className="skip-link" href="#home">Skip to main content</a>
       <Navbar />
 
       <div className="silk-bg">
-        <Silk speed={1.5} scale={0.8} color="#7B7481" noiseIntensity={1.1} rotation={0} />
+        {enableSilk && <Silk speed={1.5} scale={0.8} color="#7B7481" noiseIntensity={1.1} rotation={0} />}
       </div>
 
       <div className="home-overlay" />
@@ -208,13 +221,13 @@ export default function Home() {
             <p className="hero-eyebrow">Hi, I'm</p>
             <h1 className="hero-name">BALASANJEEV C</h1>
             <div className="hero-title-row">
-              <span className="title-chip">Full Stack Developer</span>
+              <span className="title-chip">Software Developer</span>
               <span className="title-sep" />
-              <span className="title-chip">ML Engineer</span>
+              <span className="title-chip">AI &amp; ML Engineer</span>
             </div>
             <p className="hero-tagline">
-              I craft beautiful, functional, and user‑centered digital experiences.
-              Passionate about turning ideas into elegant solutions that make a difference.
+              Computer Science Engineering student graduating in 2027, building full-stack
+              products, secure backend systems, and applied AI solutions.
             </p>
             <div className="hero-actions">
               <a href="#projects" className="btn-primary">View My Work</a>
@@ -261,24 +274,24 @@ export default function Home() {
         <section id="about" className="section-viewport content-section">
           <div className="section-inner reveal-block" ref={addRef}>
             <div className="section-heading" style={{ marginBottom: '1.5rem' }}>
-              <p className="section-body large-body">Who I am</p>
+              <h2 className="section-body large-body">Who I am</h2>
             </div>
             <p className="section-body">
-              I'm a passionate Full Stack Developer and ML Engineer with expertise in building
-              modern web applications and machine learning solutions.
+              I'm a Computer Science Engineering student at Nandha Engineering College,
+              graduating in 2027 and focused on software development and applied AI.
             </p>
             <p className="section-body">
-              I specialize in developing full-stack applications using MongoDB, Express.js, React,
-              and Node.js, while also exploring the frontiers of machine learning and artificial intelligence.
+              I build full-stack applications, backend services, and machine-learning projects
+              using technologies including React, Node.js, Go, Python, and MongoDB.
             </p>
             <div className="about-grid-simple">
               <div className="about-row">
                 <span className="about-key">Role</span>
-                <span className="about-val">Developer</span>
+                <span className="about-val">Software Developer</span>
               </div>
               <div className="about-row">
                 <span className="about-key">Expertise</span>
-                <span className="about-val">Full-Stack & ML</span>
+                <span className="about-val">Full-Stack, Backend &amp; AI/ML</span>
               </div>
               <div className="about-row">
                 <span className="about-key">Degree</span>
@@ -287,6 +300,10 @@ export default function Home() {
               <div className="about-row">
                 <span className="about-key">College</span>
                 <span className="about-val">Nandha Engineering College</span>
+              </div>
+              <div className="about-row">
+                <span className="about-key">Graduation</span>
+                <span className="about-val">Expected 2027</span>
               </div>
               <div className="about-row">
                 <span className="about-key">Location</span>
@@ -301,12 +318,12 @@ export default function Home() {
           <div className="skills-container">
 
             <div className="skills-heading reveal-block" ref={addRef}>
-              <p className="section-body large-body">Technical Expertise</p>
+              <h2 className="section-body large-body">Technical Expertise</h2>
             </div>
 
             {skillCategories.map((cat, ci) => (
               <div className="skill-category reveal-block" key={cat.label} ref={addRef}>
-                <span className="category-label">{cat.label}</span>
+                <h3 className="category-label">{cat.label}</h3>
                 <div className="marquee-track">
                   <div className={`marquee-row ${cat.dir === 'left' ? 'marquee-left' : 'marquee-right'}`}>
                     {[...cat.skills, ...cat.skills, ...cat.skills, ...cat.skills].map((skill, i) => (
@@ -329,7 +346,7 @@ export default function Home() {
         {/* ── OTHERS ── */}
         <section id="others" className="section-viewport content-section">
           <div className="section-inner reveal-block" ref={addRef}>
-            <p className="section-body large-body">Beyond the code</p>
+            <h2 className="section-body large-body">Beyond the code</h2>
             <p className="section-body">
               Certifications, symposiums, and professional growth experiences.
             </p>
@@ -387,17 +404,17 @@ export default function Home() {
               }}>
                 <div className="form-row">
                   <div className="form-field">
-                    <label className="form-label">Your Name</label>
-                    <input type="text" name="name" placeholder="John Doe" required className="form-input" />
+                    <label className="form-label" htmlFor="contact-name">Your Name</label>
+                    <input id="contact-name" type="text" name="name" autoComplete="name" placeholder="John Doe" required className="form-input" />
                   </div>
                   <div className="form-field">
-                    <label className="form-label">Email Address</label>
-                    <input type="email" name="email" placeholder="you@example.com" required className="form-input" />
+                    <label className="form-label" htmlFor="contact-email">Email Address</label>
+                    <input id="contact-email" type="email" name="email" autoComplete="email" placeholder="you@example.com" required className="form-input" />
                   </div>
                 </div>
                 <div className="form-field">
-                  <label className="form-label">Message</label>
-                  <textarea name="message" placeholder="Tell me about your project or just say hi..." required className="form-input textarea" rows="6"></textarea>
+                  <label className="form-label" htmlFor="contact-message">Message</label>
+                  <textarea id="contact-message" name="message" placeholder="Tell me about your project or just say hi..." required className="form-input textarea" rows="6"></textarea>
                 </div>
                 <button type="submit" disabled={isSending} className="form-submit-btn">
                   {isSending ? (
@@ -415,7 +432,7 @@ export default function Home() {
         </section>
 
         {showAlert && (
-          <div className="form-alert">
+          <div className="form-alert" role="status" aria-live="polite">
             <span className="alert-icon">✓</span>
             <div className="alert-content">
               <p className="alert-title">Success!</p>
@@ -458,26 +475,16 @@ function ProjectsCarousel({ projects, addRef }) {
   const prev = () => goTo((current - 1 + total) % total, 'prev');
   const next = () => goTo((current + 1) % total, 'next');
 
-  // Keyboard navigation
-  useEffect(() => {
-    const onKey = (e) => {
-      if (e.key === 'ArrowLeft') prev();
-      if (e.key === 'ArrowRight') next();
-    };
-    window.addEventListener('keydown', onKey);
-    return () => window.removeEventListener('keydown', onKey);
-  });
-
   const project = projects[current];
 
   return (
-    <section id="projects" className="section-viewport content-section projects-carousel-section">
+    <section id="projects" aria-labelledby="projects-heading" className="section-viewport content-section projects-carousel-section">
       <div className="carousel-wrapper reveal-block" ref={addRef}>
 
         {/* Heading */}
         <div className="projects-heading">
-          <p className="section-body large-body">Work I'm proud of</p>
-          <p className="carousel-counter">{current + 1} / {total}</p>
+          <h2 id="projects-heading" className="section-body large-body">Work I'm proud of</h2>
+          <p className="carousel-counter" aria-live="polite">{current + 1} / {total}</p>
         </div>
 
         {/* Main card area */}
@@ -489,10 +496,10 @@ function ProjectsCarousel({ projects, addRef }) {
           </button>
 
           {/* Card */}
-          <div className={`carousel-card-slot ${animating ? `exit-${dir}` : 'enter'}`}>
+          <div className={`carousel-card-slot ${animating ? `exit-${dir}` : 'enter'}`} aria-live="polite" aria-busy={animating}>
             <div className="project-card glass-card">
               <div className="project-image-container">
-                <img src={project.image} alt={project.title} className="project-image" />
+                <img src={project.image} alt={`${project.title} project preview`} width="1919" height="869" loading="lazy" decoding="async" className="project-image" />
               </div>
               <div className="project-details">
                 <div className="project-info">
@@ -513,9 +520,11 @@ function ProjectsCarousel({ projects, addRef }) {
                       <FaExternalLinkAlt /> Live Demo
                     </a>
                   )}
-                  <a href={project.githubUrl} target="_blank" rel="noopener noreferrer" className="project-link">
-                    <FaGithub /> GitHub
-                  </a>
+                  {project.githubUrl && (
+                    <a href={project.githubUrl} target="_blank" rel="noopener noreferrer" className="project-link">
+                      <FaGithub /> GitHub
+                    </a>
+                  )}
                 </div>
               </div>
             </div>
@@ -535,7 +544,8 @@ function ProjectsCarousel({ projects, addRef }) {
               key={i}
               className={`carousel-dot ${i === current ? 'active' : ''}`}
               onClick={() => goTo(i, i > current ? 'next' : 'prev')}
-              aria-label={`Go to project ${i + 1}`}
+              aria-label={`Show ${projects[i].title}`}
+              aria-current={i === current ? 'true' : undefined}
             />
           ))}
         </div>
@@ -567,7 +577,7 @@ function OthersCarousel({ items, addRef }) {
   const item = items[current];
 
   return (
-    <div className="carousel-wrapper reveal-block" ref={addRef} style={{ marginTop: '2rem' }}>
+    <div className="carousel-wrapper reveal-block" ref={addRef} style={{ marginTop: '2rem' }} role="region" aria-label="Experience and activities carousel">
       <div className="projects-heading">
         <p className="carousel-counter">{current + 1} / {total}</p>
       </div>
@@ -587,9 +597,10 @@ function OthersCarousel({ items, addRef }) {
                   style={{ border: 'none' }}
                   title={item.title}
                   allow="autoplay"
+                  loading="lazy"
                 />
               ) : (
-                <img src={item.image} alt={item.title} className="project-image" />
+                <img src={item.image} alt={`${item.title} certificate preview`} width="1254" height="847" loading="lazy" decoding="async" className="project-image" />
               )}
             </div>
             <div className="project-details">
@@ -618,7 +629,13 @@ function OthersCarousel({ items, addRef }) {
       </div>
       <div className="carousel-dots">
         {items.map((_, i) => (
-          <button key={i} className={`carousel-dot ${i === current ? 'active' : ''}`} onClick={() => goTo(i, i > current ? 'next' : 'prev')} />
+          <button
+            key={i}
+            className={`carousel-dot ${i === current ? 'active' : ''}`}
+            onClick={() => goTo(i, i > current ? 'next' : 'prev')}
+            aria-label={`Show ${items[i].title}`}
+            aria-current={i === current ? 'true' : undefined}
+          />
         ))}
       </div>
     </div>

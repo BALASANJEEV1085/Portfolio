@@ -1,0 +1,99 @@
+# Bala Sanjeev C — Portfolio Reference
+
+Canonical portfolio: https://balasanjeev.netlify.app/
+
+This document is a factual, text-first representation of the public portfolio. It is intended to help recruiters, search tools, and AI assistants understand the site's content. It does not guarantee indexing, citation, model training, or ranking.
+
+## Professional summary
+
+Bala Sanjeev C is a Computer Science Engineering student at Nandha Engineering College, expected to graduate in 2027. He is based in Palani, Tamil Nadu, India. His work focuses on full-stack software development, backend systems, and applied artificial intelligence and machine learning. He is interested in software development, software engineering, AI engineering, and integration engineering opportunities.
+
+## Education
+
+- Degree: B.E. Computer Science and Engineering
+- Institution: Nandha Engineering College
+- Study period: 2023–present
+- Expected graduation: 2027
+
+## Technical skills
+
+- Programming languages: Java, Python, JavaScript, Go
+- Frontend: HTML, CSS, React, Bootstrap
+- Backend: Node.js, Express.js, Go
+- Data stores: MongoDB, MySQL, PostgreSQL, Redis, Supabase
+- Tools and practices: Git, GitHub, Docker, Jupyter, REST API development
+- AI and machine learning: natural language processing, sentiment analysis, computer vision, VADER, YOLOv8, PyTorch
+
+Technologies listed here are supported by the portfolio's skills data or named project implementations. They do not imply expert-level proficiency.
+
+## Selected projects
+
+### Deptic
+
+Status: completed/publicly available.
+
+Deptic is a full-stack platform for scanning GitHub repository dependencies, detecting known vulnerabilities, generating security-fix pull requests, exporting CycloneDX and SPDX software bills of materials, and reporting compliance status. Bala's documented role is full-stack developer. The implementation uses Go, Fiber, PostgreSQL, Redis, React, TypeScript, Docker, JWT authentication, the GitHub API, OSV.dev, and NVD data.
+
+- Live application: https://deptic.netlify.app/
+- Source repository: https://github.com/BALASANJEEV1085/deptic
+
+### Sentiment Analysis Dashboard
+
+Status: completed project.
+
+A Python dashboard that analyzes sentiment across datasets and presents the results in a unified interface. Documented technologies include Python, Flask, Streamlit, and VADER.
+
+- Source repository: https://github.com/BALASANJEEV1085/Sentiment_analysis_sih
+
+### SocialPlanet
+
+Status: completed/publicly available.
+
+A responsive full-stack social application with posting, liking, and commenting features. Documented technologies include React, MongoDB, Node.js, and Express.js.
+
+- Live application: https://socialsplanet.netlify.app/
+
+### Nandha Notes
+
+Status: completed/publicly available.
+
+A study-material sharing platform for college students with authentication and content-management features. Bala's portfolio identifies him as team leader. Documented technologies include React, MongoDB, Node.js, Express, and Tailwind CSS.
+
+- Live application: https://nandha-notes.netlify.app/
+- Source repository: https://github.com/BALASANJEEV1085/NANDHANOTES
+
+### Silkworm Classification
+
+Status: in progress.
+
+A YOLOv8-based computer-vision project intended to classify silkworms as healthy or affected by grasserie. Documented technologies include Python, YOLOv8, PyTorch, and computer vision.
+
+- GitHub profile: https://github.com/BALASANJEEV1085
+
+## Experience
+
+### Data and AI Intern — ELRAFACT Technology Solutions
+
+- Period: June 2025–July 2025
+- Portfolio description: worked on web scraping and an AI-powered PDF chatbot using Python and natural-language processing.
+- Certificate link: https://drive.google.com/file/d/1RlT_1GupqnJUc9WNdJdhyI8XkhiCuvuo/view?usp=sharing
+
+## Documented technical activities
+
+- Participated in ASTRANOVA 2K26, a national-level technical symposium at CIT Coimbatore.
+- Demonstrated a VADER-based sentiment-analysis project at Nandha's Innovation Day 2026.
+
+## Public profiles and contact
+
+- Portfolio: https://balasanjeev.netlify.app/
+- GitHub: https://github.com/BALASANJEEV1085
+- LinkedIn: https://www.linkedin.com/in/balasanjeev-c-00258b298/
+- Email: mailto:balasnjeev1085@gmail.com
+- Resume: https://balasanjeev.netlify.app/assets/RESUME.docx
+
+## Source and maintenance notes
+
+- The canonical public site and linked repositories should be preferred when details conflict.
+- The portfolio is a single-page site; fragment URLs identify sections, not separate indexable pages.
+- No ratings, testimonials, salaries, awards beyond those documented above, or employment claims should be inferred.
+- Project status and skills should be rechecked when the portfolio is updated.

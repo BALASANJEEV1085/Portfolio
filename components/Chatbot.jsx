@@ -163,25 +163,31 @@ export default function Chatbot() {
 
   return (
     <div className="cb-root">
-      <button className={`cb-trigger ${isOpen ? 'cb-trigger--open' : ''}`} onClick={() => setIsOpen(o => !o)}>
-        <img src={aiiImage} alt="" draggable={false} />
+      <button
+        className={`cb-trigger ${isOpen ? 'cb-trigger--open' : ''}`}
+        onClick={() => setIsOpen(o => !o)}
+        aria-label={isOpen ? "Close Bala's assistant" : "Open Bala's assistant"}
+        aria-expanded={isOpen}
+        aria-controls="bala-assistant-panel"
+      >
+        <img src={aiiImage} alt="" width="740" height="505" draggable={false} />
       </button>
 
-      <div className={`cb-panel ${isOpen ? 'cb-panel--visible' : ''}`}>
+      <div id="bala-assistant-panel" className={`cb-panel ${isOpen ? 'cb-panel--visible' : ''}`} role="region" aria-label="Bala's portfolio assistant" aria-hidden={!isOpen}>
         <div className="cb-header">
           <div className="cb-header__left">
-            <div className="cb-header__avatar"><img src={aiiImage} alt="" /></div>
+            <div className="cb-header__avatar"><img src={aiiImage} alt="" width="740" height="505" /></div>
             <div className="cb-header__meta">
               <span className="cb-header__name">Bala's Assistant</span>
               <span className="cb-header__status"><span className="cb-dot" />Online</span>
             </div>
           </div>
-          <button className="cb-close" onClick={() => setIsOpen(false)}>
+          <button className="cb-close" onClick={() => setIsOpen(false)} aria-label="Close assistant">
             <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 1l12 12M13 1L1 13" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"/></svg>
           </button>
         </div>
 
-        <div className="cb-body">
+        <div className="cb-body" role="log" aria-live="polite" aria-relevant="additions text">
           {messages.map((msg) => (
             <div key={msg.id} className={`cb-msg cb-msg--${msg.sender}`}>
               <div className="cb-msg__bubble">{msg.text}</div>
@@ -232,13 +238,14 @@ export default function Chatbot() {
             ref={inputRef}
             className="cb-input"
             type="text"
+            aria-label="Ask Bala's portfolio assistant"
             placeholder="Ask me anything..."
             value={input}
             onChange={e => setInput(e.target.value)}
-            disabled={streamingMessageId || isTyping}
+            disabled={Boolean(streamingMessageId) || isTyping}
             autoComplete="off"
           />
-          <button className="cb-send" type="submit" disabled={!input.trim() || streamingMessageId || isTyping}>
+          <button className="cb-send" type="submit" aria-label="Send message" disabled={!input.trim() || Boolean(streamingMessageId) || isTyping}>
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
               <path d="M22 2L11 13M22 2L15 22l-4-9-9-4 20-7z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
             </svg>
