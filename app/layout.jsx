@@ -4,7 +4,7 @@ import { Geist } from "next/font/google";
 const SITE_URL = "https://balasanjeev.netlify.app";
 const SITE_NAME = "Bala Sanjeev C — Software Developer & AI Engineer";
 const SITE_DESCRIPTION =
-  "Portfolio of Bala Sanjeev C, a Computer Science Engineering student building full-stack software, secure backend systems, and applied AI projects.";
+  "Portfolio of Bala Sanjeev C, creator of Deptic and a Computer Science Engineering student building full-stack software, secure backend systems, and applied AI projects.";
 
 const geist = Geist({
   subsets: ["latin"],
@@ -26,8 +26,14 @@ export const metadata = {
   keywords: [
     "Bala Sanjeev C",
     "Balasanjeev C",
+    "Bala Sanjeev",
+    "Bala",
+    "BALASANJEEV",
     "Bala Sanjeev software developer",
+    "Balasanjeev developer",
     "Bala Sanjeev AI engineer",
+    "Deptic creator",
+    "creator of Deptic",
     "software developer portfolio",
     "software engineer portfolio",
     "full-stack developer",
@@ -99,7 +105,7 @@ const structuredData = {
       name: "Bala Sanjeev C Portfolio",
       description: SITE_DESCRIPTION,
       keywords:
-        "software development, full-stack engineering, backend development, AI engineering, machine learning, integration engineering",
+        "Bala Sanjeev C, Balasanjeev developer, Deptic creator, software development, full-stack engineering, backend development, AI engineering, machine learning, integration engineering",
       inLanguage: "en-IN",
       publisher: { "@id": `${SITE_URL}/#person` },
     },
@@ -117,7 +123,7 @@ const structuredData = {
       "@type": "Person",
       "@id": `${SITE_URL}/#person`,
       name: "Bala Sanjeev C",
-      alternateName: "Balasanjeev C",
+      alternateName: ["Balasanjeev C", "Bala Sanjeev", "Bala", "BALASANJEEV"],
       url: `${SITE_URL}/`,
       image: `${SITE_URL}/image.png`,
       email: "mailto:balasnjeev1085@gmail.com",
@@ -174,6 +180,7 @@ const structuredData = {
       url: "https://deptic.netlify.app/",
       codeRepository: "https://github.com/BALASANJEEV1085/deptic",
       author: { "@id": `${SITE_URL}/#person` },
+      creator: { "@id": `${SITE_URL}/#person` },
     },
     {
       "@type": "SoftwareApplication",

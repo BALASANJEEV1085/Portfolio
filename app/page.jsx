@@ -290,6 +290,10 @@ export default function Home() {
               I'm interested in software engineering, AI engineering, backend development,
               and API and integration engineering opportunities.
             </p>
+            <p className="section-body">
+              I created Deptic, a developer-security platform for dependency vulnerability
+              scanning, automated remediation, SBOM generation, and compliance reporting.
+            </p>
             <div className="about-grid-simple">
               <div className="about-row">
                 <span className="about-key">Role</span>

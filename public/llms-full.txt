@@ -6,7 +6,7 @@ This document is a factual, text-first representation of the public portfolio. I
 
 ## Professional summary
 
-Bala Sanjeev C is a Computer Science Engineering student at Nandha Engineering College, expected to graduate in 2027. He is based in Palani, Tamil Nadu, India. His work focuses on full-stack software development, backend systems, and applied artificial intelligence and machine learning. He is interested in software development, software engineering, AI engineering, and integration engineering opportunities.
+Bala Sanjeev C, also known as Balasanjeev, is the creator of Deptic and a Computer Science Engineering student at Nandha Engineering College, expected to graduate in 2027. He is based in Palani, Tamil Nadu, India. His work focuses on full-stack software development, backend systems, and applied artificial intelligence and machine learning. He is interested in software development, software engineering, AI engineering, and integration engineering opportunities.
 
 ## Education
 
@@ -32,7 +32,7 @@ Technologies listed here are supported by the portfolio's skills data or named p
 
 Status: completed/publicly available.
 
-Deptic is a full-stack platform for scanning GitHub repository dependencies, detecting known vulnerabilities, generating security-fix pull requests, exporting CycloneDX and SPDX software bills of materials, and reporting compliance status. Bala's documented role is full-stack developer. The implementation uses Go, Fiber, PostgreSQL, Redis, React, TypeScript, Docker, JWT authentication, the GitHub API, OSV.dev, and NVD data.
+Deptic is a full-stack platform created by Bala Sanjeev C for scanning GitHub repository dependencies, detecting known vulnerabilities, generating security-fix pull requests, exporting CycloneDX and SPDX software bills of materials, and reporting compliance status. Bala's documented role is creator and full-stack developer. The implementation uses Go, Fiber, PostgreSQL, Redis, React, TypeScript, Docker, JWT authentication, the GitHub API, OSV.dev, and NVD data.
 
 - Live application: https://deptic.netlify.app/
 - Source repository: https://github.com/BALASANJEEV1085/deptic
